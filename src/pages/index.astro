@@ -1,17 +1,182 @@
 ---
+import { getImage } from "astro:assets";
+import myBackground from "../../src/assets/images/hero-image.jpg";
+import myBackgroundPortrait from "../../src/assets/images/hero-image-portrait.png";
+import { Font } from "astro:assets";
+import Logo from "../components/Logo.astro";
+
+const highResOptimizedBackground = await getImage({ src: myBackground, format: "avif" });
+const midResOptimizedBackground = await getImage({ src: myBackground, format: "avif", width: 66.66, quality: "mid" });
+const lowResOptimizedBackground = await getImage({ src: myBackground, format: "avif", width: 33.33, quality: "low" });
+const optimizedBackgroundUrl = `url('${highResOptimizedBackground.src}'), url('${midResOptimizedBackground.src}'), url('${lowResOptimizedBackground.src}')`
+
+const highResOptimizedBackgroundPortrait = await getImage({ src: myBackgroundPortrait, format: "avif" });
+const midResOptimizedBackgroundPortrait = await getImage({ src: myBackgroundPortrait, format: "avif", width: 66.66, quality: "mid" });
+const lowResOptimizedBackgroundPortrait = await getImage({ src: myBackgroundPortrait, format: "avif", width: 33.33, quality: "low" });
+const optimizedBackgroundUrlPortrait = `url('${highResOptimizedBackgroundPortrait.src}'), url('${midResOptimizedBackgroundPortrait.src}'), url('${lowResOptimizedBackgroundPortrait.src}')`
 
 ---
 
 <html lang="en">
 	<head>
+        <title>Golden Tie | Institute</title>
+		<meta name="description" content="Your pathway to professional excellence is coming soon. We are currently finalizing a comprehensive syllabus designed to elevate your career" />
+
+        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+		<link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+		<link rel="manifest" href="/favicon/site.webmanifest" />
+
+        <Font cssVariable="--font-montserrat" />
+        <Font cssVariable="--font-lora" />
 		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
+        <style define:vars={{optimizedBackgroundUrl, optimizedBackgroundUrlPortrait}}>
+            body{
+                margin: 0;
+                padding: 0;
+                background-image: var(--optimizedBackgroundUrl);
+                background-repeat: no-repeat, no-repeat, no-repeat;
+                background-size: cover, cover, cover;
+                overflow: hidden;
+                padding: 3rem;
+                min-height: 100dvh;
+            }
+
+            body::after{
+                content: "";
+                display: block;
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to right, rgba(0,0,0, 80%), rgba(0,0,0, 50%) 45%, rgba(0,0,0, 5%) 80%);
+            }
+
+            h1{
+                font-family: var(--font-montserrat);
+                margin: 0;
+                font-size: 7rem;
+                line-height: 6rem;
+                color: #d6a400;
+                /* Scales from 3rem (mobile) to 7rem (desktop) */
+                font-size: clamp(3rem, 1.55rem + 7.27vw, 7rem);
+                
+                /* Scales from 3rem (mobile) to 6rem (desktop) */
+                line-height: clamp(3rem, 1.91rem + 5.45vw, 6rem);
+            }
+
+            :global(.logo-container){
+                position: absolute;
+                z-index: 1;
+            }
+
+            .page-title{
+                z-index: 1;
+                position: relative;
+                top: 30vh; 
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .statement{
+                font-family: var(--font-lora);
+                font-size: 1.2rem;
+                color: white;
+                margin: 0.6rem 0;
+
+                /* Scales from 1rem (mobile) to 1.2rem (desktop) */
+                font-size: clamp(0.8rem, 0.93rem + 0.36vw, 1.2rem);
+            }
+
+            div:has(> .statement){
+                display: flex;
+                /* width: 35vw; */
+                /* 
+                    min: 280px (keeps it from breaking on very tiny screens)
+                    preferred: 90vw (takes up most of the screen on mobile/tablet)
+                    max: 35vw (caps it at 35% of the screen on desktop)
+                */
+                width: clamp(280px, 90vw, 35vw);
+                padding-left: 15px;
+                border-left: solid;
+                border-width: 3px;
+                border-color: white;
+                background-color: rgba(0,0,0,5%);
+                backdrop-filter: blur(3px);
+            }
+
+            @media screen and (max-width: 1024px) {
+                div:has(> .statement){
+                    width: 60%;
+                }
+            }
+
+            @media screen and (max-width: 770px) {
+                body{
+                    background-position: 49% top, 49% top, 49% top;
+                }
+
+                /* h1{
+                    font-size: 5rem;
+                    line-height: 5rem;
+                } */
+
+                div:has(> .statement){
+                    width: 70%;
+                }
+
+                /* .statement{
+                    font-size: 1.1rem;
+                } */
+                
+            }
+
+            @media screen and (max-width: 480px) {
+                body{
+                    background-image: var(--optimizedBackgroundUrlPortrait);
+                    padding: 1rem 0.7rem ;
+                }
+
+                body::after{
+                    background: linear-gradient(to right, rgba(0,0,0, 80%), rgba(0,0,0, 50%) 50%, rgba(0,0,0, 50%) 100%);
+                }
+
+                .page-title{
+                    top: 50vh; 
+                    backdrop-filter: blur(2px);
+                    background-color: rgba(0,0,0,2.5%);
+                    padding: 10px;
+                }
+
+                /* h1{
+                    font-size: 3rem;
+                    line-height: 3rem;
+                } */
+
+                div:has(> .statement){
+                    width: 90%;
+                    backdrop-filter: none;
+                    background-color: transparent;
+                }
+
+                .statement{
+                    font-size: 1rem;
+                }
+            }
+
+        </style>
 	</head>
 	<body>
-		<h1>Astro</h1>
+        <Logo />
+        <div class="page-title">
+            <h1>Coming <br/> Soon ...</h1>
+            <div>
+                <p class="statement">
+                    We are currently crafting a comprehensive syllabus designed to elevate your career. Full course details and enrollment information will be available shortly.
+                </p>
+            </div>
+        </div>
 	</body>
 </html>

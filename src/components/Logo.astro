@@ -1,0 +1,85 @@
+---
+import logoMarkUrl from "../assets/images/golden-tie-logo.svg?url"
+
+const {label, compact = false} = Astro.props
+---
+
+<div class:list={["logo-container", {compact}]}>
+    <img class="logo-mark" src={logoMarkUrl} alt="" />
+    <div class="logo-footer">
+        <span class="decorator left"></span>
+        <span class="label">{label?.toUpperCase() ?? "INSTITUTE"}</span>
+        <span  class="decorator right"></span>
+    </div>
+</div>
+<style>
+    .logo-container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .logo-mark{
+        width: 100px;
+        height: auto;
+    }
+
+    .logo-footer{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .decorator{
+        display: block;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(to bottom, #F9E322, #F9BD11, #C98200);
+    }
+
+    .right{
+        /* flat inner edge (near label), tapers to a point on the outer side */
+        clip-path: polygon(0% 10%, 0% 90%, 100% 50%);
+    }
+
+    .left{
+        /* flat inner edge (near label), tapers to a point on the outer side */
+        clip-path: polygon(100% 10%, 100% 90%, 0% 50%);
+    }
+
+    .label{
+        font-size: 0.8rem;
+        font-weight: bolder;
+        line-height: 1.2;
+        text-align: center;
+        background: linear-gradient(to bottom, #F9E322, #F9BD11, #C98220);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .logo-container.compact{
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .logo-container.compact .logo-mark{
+        width: 40px;
+        height: auto;
+    }
+
+    .logo-container.compact .logo-footer{
+        gap: 6px;
+    }
+
+    .logo-container.compact .decorator{
+        width: 20px;
+        height: 3px;
+    }
+
+    .logo-container.compact .label{
+        font-size: 0.6rem;
+    }
+</style>
