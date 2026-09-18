@@ -1,5 +1,5 @@
 {
-    "name": "golden-tie-institute",
+    "name": "golden-tie-school",
     "compatibility_date": "2026-09-18", // Update to the day you deploy
     "assets": {
         "directory": "./dist",
