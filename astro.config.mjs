@@ -5,22 +5,22 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://biodiesel.goldentie.africa/",
+    site: "https://education.goldentie.africa/",
 
-  fonts: [
-      {
-          provider: fontProviders.fontsource(),
-          name: "Montserrat",
-          cssVariable: "--font-montserrat",
-          weights: [500, 600, 700, 800],
-      },
-      {
-          provider: fontProviders.fontsource(),
-          name: "Lora",
-          cssVariable: "--font-lora",
-          weights: [400, 500, 600],
-      },
-  ],
+    fonts: [
+        {
+            provider: fontProviders.fontsource(),
+            name: "Montserrat",
+            cssVariable: "--font-montserrat",
+            weights: [500, 600, 700, 800],
+        },
+        {
+            provider: fontProviders.fontsource(),
+            name: "Lora",
+            cssVariable: "--font-lora",
+            weights: [400, 500, 600],
+        },
+    ],
 
-  adapter: cloudflare(),
+    adapter: cloudflare(),
 });
